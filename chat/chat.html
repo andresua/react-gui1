@@ -1,0 +1,44 @@
+<head>
+  <title>Chat Meteor</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+    <div class="col-md-9">
+        <h2>
+            <i class="glyphicon glyphicon-comment"></i>
+            Conversación actual
+        </h2>
+          <ul id="messages">
+
+              {{#each messages}}
+                {{> message}}
+              {{/each}}
+
+          </ul>
+    </div>
+    <div class="col-md-3 hidden-sm hidden-xs">
+        <h2>
+            <i class="glyphicon glyphicon-off"></i>
+            Usuarios online
+        </h2>
+        <div id="users">
+        </div>
+        <div id="user-panel" class="panel panel-default" style="display:none">
+          <div class="panel-body">
+              <i class="glyphicon glyphicon-user"></i> Usuario <span class="user-number"></span> se ha conectado
+          </div>
+      </div>
+
+    </div>
+    <form class="form-inline message-form">
+        <div class="form-group" style="width:90%">
+            <input style="width:100%" class="form-control" placeholder="Escriba su mensaje" id="message-input" name="message" autocomplete="off" />
+        </div>
+       <button class="btn btn-default">Enviar</button>
+    </form>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+</body>
+
+<template name="message">
+  <li>{{text}}</li>
+</template>
