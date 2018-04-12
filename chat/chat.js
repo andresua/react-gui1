@@ -2,7 +2,7 @@
 Messages = new Mongo.Collection("messages");
 
 if (Meteor.isClient) {
-	Template.devicesConfiguration.onCreated(()=>{
+	Template.AdminLTE.onCreated(()=>{
 		/*
 		 * Flot Interactive Chart
 		 * -----------------------
