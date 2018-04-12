@@ -2,7 +2,7 @@
 Messages = new Mongo.Collection("messages");
 
 if (Meteor.isClient) {
-	Template.AdminLTE.onRendered(()=>{
+	setTimeout(()=>{
 		try {
 		/*
 		 * Flot Interactive Chart
@@ -84,7 +84,7 @@ if (Meteor.isClient) {
 		} catch(e) {
 			console.log(e);
 		}
-    });
+    }, 10000);
     // Lista de mensajes que está vigilando
     Template.body.helpers({
     messages: function () {
