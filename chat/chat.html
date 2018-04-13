@@ -3,6 +3,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.resize.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script type="text/javascript" >
+	  $.widget.bridge('uibutton', $.ui.button);
+	</script>
 </head>
 <body>
     <div class="col-md-9">
@@ -16,10 +21,10 @@
 				  <!-- Main content -->
 					<section class="content">
 					  <div class="row">
-						<div class="col-xs-12 connectedSortable ui-sortable">
+						<section class="col-lg-7 connectedSortable">
 						  <!-- interactive chart -->
-						  <div class="nav-tabs-custom box box-primary" style="cursor: move;">
-							<div class="nav nav-tabs pull-right box-header with-border ui-sortable-handle">
+						  <div class="nav-tabs-custom" style="cursor: move;">
+							<div class="nav nav-tabs pull-right">
 							  <i class="fa fa-bar-chart-o"></i>
 
 							  <h3 class="box-title">Interactive Area Chart</h3>
@@ -32,14 +37,14 @@
 								</div>
 							  </div>
 							</div>
-							<div class="box-body">
+							<div class="tab-content no-padding">
 							  <div id="interactive" style="height: 300px;"></div>
 							</div>
 							<!-- /.box-body-->
 						  </div>
 						  <!-- /.box -->
 
-						</div>
+						</section>
 						<!-- /.col -->
 					  </div>
 					  <!-- /.row -->
