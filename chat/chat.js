@@ -2,6 +2,7 @@
 Messages = new Mongo.Collection("messages");
 
 if (Meteor.isClient) {
+	Meteor.absoluteUrl.defaultOptions.rootUrl = location.protocol + "//" + location.host;
 	setTimeout(()=>{
 		try {
 		/*
