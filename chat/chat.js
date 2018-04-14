@@ -125,7 +125,7 @@ if (Meteor.isClient) {
         // Obtiene el texto del campo de texto
         var text = event.target.message.value;
 
-         // Agrega un mensaje
+         // Agrega un mensaje 
          Messages.insert({
            text: text,
            createdAt: new Date()
