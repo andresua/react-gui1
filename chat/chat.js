@@ -16,7 +16,8 @@ if (Meteor.isClient) {
 		 */
 		// We use an inline data source in the example, usually data would
 		// be fetched from a server
-		
+		var interactive_plot = {};
+		var update = {};
 		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad",color:"#dd4b39"}]) {
 			
 			
@@ -47,7 +48,7 @@ if (Meteor.isClient) {
 			
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
-			if(!interactive_plot) interactive_plot = {};
+			
 			interactive_plot[sensorName] = $.plot('#interactive_'+sensorName, [getRandomData()], {
 			  grid  : {
 				borderColor: '#f3f3f3',
@@ -73,7 +74,7 @@ if (Meteor.isClient) {
 			})
 			var updateInterval = 500 //Fetch data ever x milliseconds
 			var realtime       = 'on' //If == to on then fetch data every x seconds. else stop fetching
-			if(!update) update = {};
+			
 			update[sensorName] = function() {
 			  console.log(sensorName, interactive_plot[sensorName].getPlaceholder());
 			  interactive_plot[sensorName].setData([getRandomData()])
@@ -114,7 +115,7 @@ if (Meteor.isClient) {
 		} catch(e) {
 			console.log(e);
 		}
-    }, 10000);
+    }, 1000);
     // Lista de mensajes que está vigilando
     Template.body.helpers({
     messages: function () {
