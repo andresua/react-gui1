@@ -138,13 +138,13 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.publish('temperatura', function streamTemperaturaPublication() {
-    return Tasks.find();
+    return {};
   });
   Meteor.publish('voltaje', function streamVoltajePublication() {
-    return Tasks.find();
+    return {};
   });
   Meteor.publish('humedad', function streamHumedadPublication() {
-    return Tasks.find();
+    return {};
   });
   
   Meteor.startup(function () {
