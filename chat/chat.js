@@ -4,7 +4,7 @@ Messages = new Mongo.Collection("messages");
 if (Meteor.isClient) {
 	Meteor.absoluteUrl.defaultOptions.rootUrl = location.protocol + "//" + location.host;
 	setTimeout(()=>{
-	  this.state = new ReactiveDict();
+	  //this.state = new ReactiveDict();
 	  Meteor.subscribe('temperatura');
 	  Meteor.subscribe('voltaje');
 	  Meteor.subscribe('humedad');
