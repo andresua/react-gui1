@@ -5,9 +5,9 @@ if (Meteor.isClient) {
 	Meteor.absoluteUrl.defaultOptions.rootUrl = location.protocol + "//" + location.host;
 	setTimeout(()=>{
 	  //this.state = new ReactiveDict();
-	  Meteor.subscribe('temperatura');
-	  Meteor.subscribe('voltaje');
-	  Meteor.subscribe('humedad');
+	  var temperatura = Meteor.subscribe('temperatura');
+	  var voltaje = Meteor.subscribe('voltaje');
+	  var humedad = Meteor.subscribe('humedad');
 
 		try {
 		/*
@@ -138,13 +138,13 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.publish('temperatura', function streamTemperaturaPublication() {
-    return messages.find();
+    return Messages.find();
   });
   Meteor.publish('voltaje', function streamVoltajePublication() {
-    return messages.find();
+    return Messages.find();
   });
   Meteor.publish('humedad', function streamHumedadPublication() {
-    return messages.find();
+    return Messages.find();
   });
   
   Meteor.startup(function () {
