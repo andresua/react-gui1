@@ -40,7 +40,7 @@ if (Meteor.isClient) {
 		  return res
 		}
 		
-		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad"],color:"#dd4b39"}) {
+		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad",color:"#dd4b39"}]) {
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
 			var interactive_plot = $.plot('#interactive_'+sensorName, [getRandomData()], {
