@@ -48,7 +48,7 @@ if (Meteor.isClient) {
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
 			if(!interactive_plot) interactive_plot = {};
-			var interactive_plot[sensorName] = $.plot('#interactive_'+sensorName, [getRandomData()], {
+			interactive_plot[sensorName] = $.plot('#interactive_'+sensorName, [getRandomData()], {
 			  grid  : {
 				borderColor: '#f3f3f3',
 				borderWidth: 1,
@@ -74,7 +74,7 @@ if (Meteor.isClient) {
 			var updateInterval = 500 //Fetch data ever x milliseconds
 			var realtime       = 'on' //If == to on then fetch data every x seconds. else stop fetching
 			if(!update) update = {};
-			var update[sensorName] = function() {
+			update[sensorName] = function() {
 			  console.log(sensorName, interactive_plot[sensorName].getPlaceholder());
 			  interactive_plot[sensorName].setData([getRandomData()])
 			  // Since the axes don't change, we don't need to call plot.setupGrid()
