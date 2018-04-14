@@ -16,31 +16,35 @@ if (Meteor.isClient) {
 		 */
 		// We use an inline data source in the example, usually data would
 		// be fetched from a server
-		function getRandomData() {
-			
-		  var data = [], totalPoints = 100
-		  if (data.length > 0)
-			data = data.slice(1)
-		  // Do a random walk
-		  while (data.length < totalPoints) {
-			var prev = data.length > 0 ? data[data.length - 1] : 50,
-				y    = prev + Math.random() * 10 - 5
-			if (y < 0) {
-			  y = 0
-			} else if (y > 100) {
-			  y = 100
-			}
-			data.push(y)
-		  }
-		  // Zip the generated y values with the x values
-		  var res = []
-		  for (var i = 0; i < data.length; ++i) {
-			res.push([i, data[i]])
-		  }
-		  return res
-		}
 		
 		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad",color:"#dd4b39"}]) {
+			
+			
+			  var data = [], totalPoints = 100;
+			  const getRandomData = function() {
+				
+			  if (data.length > 0)
+				data = data.slice(1)
+			  // Do a random walk
+			  while (data.length < totalPoints) {
+				var prev = data.length > 0 ? data[data.length - 1] : 50,
+					y    = prev + Math.random() * 10 - 5
+				if (y < 0) {
+				  y = 0
+				} else if (y > 100) {
+				  y = 100
+				}
+				data.push(y)
+			  }
+			  // Zip the generated y values with the x values
+			  var res = []
+			  for (var i = 0; i < data.length; ++i) {
+				res.push([i, data[i]])
+			  }
+			  return res
+			};
+			
+			
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
 			var interactive_plot = $.plot('#interactive_'+sensorName, [getRandomData()], {
