@@ -80,7 +80,7 @@ if (Meteor.isClient) {
 			  update()
 			}
 			//REALTIME TOGGLE
-			$('#realtime .btn').click(() => {
+			$('#realtime_' + sensorName + ' .btn').click(() => {
 			  if ($(this).data('toggle') === 'on') {
 				realtime = 'on'
 			  }
