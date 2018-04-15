@@ -26,25 +26,36 @@ if (Meteor.isClient) {
 		function subscriptionMTR(idx) {
 			return (result) => {
 				console.log(result);
-				if(interactive_plot[idx])interactive_plot[idx].dataMongo = result;
-				// update(mongo)
+				if(interactive_plot[idx] && result && result.map) {
+					interactive_plot[idx].dataMongo = result.map((collectionItem) => collectionItem.value);
+					// update(mongo)
+				}
 			};
 		}
+		
+		function generateSubscritor(cursor, idx) {
+			return {
+				  added: function () {
+					  subscriptionMTR(idx)(cursor.fetch());
+				  },
+				  changed: function () {
+					  subscriptionMTR(idx)(cursor.fetch());
+				  },
+				  removed: function () {
+					  subscriptionMTR(idx)(cursor.fetch());
+				  }
+			  };
+		}
+		
 		  var temperatura = Meteor.subscribe('temperatura', subscriptionMTR(0));
 		  var cusorTemperatura = TemperaturaMongo.find();
-		  cusorTemperatura.observeChanges({
-			  added: function () {
-				  subscriptionMTR(0)(cusorTemperatura.fetch());
-			  },
-			  changed: function () {
-				  subscriptionMTR(0)(cusorTemperatura.fetch());
-			  },
-			  removed: function () {
-				  subscriptionMTR(0)(cusorTemperatura.fetch());
-			  }
-		  });
+		  cusorTemperatura.observeChanges(cusorTemperatura, 0);
 		  var voltaje = Meteor.subscribe('voltaje', subscriptionMTR(1));
+		  var cusorVoltaje = VoltajeMongo.find();
+		  cusorVoltaje.observeChanges(cusorVoltaje, 1);
 		  var humedad = Meteor.subscribe('humedad', subscriptionMTR(2));
+		  var cusorHumedad = HumedadMongo.find();
+		  cusorHumedad.observeChanges(cusorHumedad, 2);
 		function update(mongo) {
 		  interactive_plot.forEach((ip) => {
 			  if(ip.realtime === 'on')
