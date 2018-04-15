@@ -40,7 +40,7 @@ if (Meteor.isClient) {
 			    ip.draw()
 		  })
 		  // Since the axes don't change, we don't need to call plot.setupGrid()
-		  mongo ? return true:setTimeout(update, updateInterval);
+		  return mongo ? false:setTimeout(update, updateInterval);
 		};
 		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad",color:"#dd4b39"}]) {
 			
