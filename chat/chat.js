@@ -110,7 +110,7 @@ if (Meteor.isClient) {
 			var minValue = sensor.min;
 			var maxValue = sensor.max;
 			var mongoStart = [];
-			for(int i = minValue; i < maxValue; i++) {
+			for(var i = minValue; i < maxValue; i++) {
 				mongoStart.push([i, 0]);
 			}
 			interactive_plot.push($.plot('#interactive_'+sensorName, [getFromMongo ? mongoStart : getRandomData()], {
