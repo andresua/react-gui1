@@ -135,6 +135,7 @@ if (Meteor.isClient) {
 			);
 			interactive_plot[lastIP].realtime       = 'on' //If == to on then fetch data every x seconds. else stop fetching
 			interactive_plot[lastIP].getRandomData       = getRandomData 
+			interactive_plot[lastIP].dataMongo = []
 			
 			//INITIALIZE REALTIME DATA FETCHING
 			if (interactive_plot[lastIP].realtime === 'on') {
