@@ -21,7 +21,7 @@ if (Meteor.isClient) {
 		function update() {
 		  interactive_plot.forEach((ip) => {
 			  if(ip.realtime === 'on')
-				ip.setData([getRandomData()])
+				ip.setData([ip.getRandomData()])
 			    ip.draw()
 		  })
 		  // Since the axes don't change, we don't need to call plot.setupGrid()
@@ -30,6 +30,8 @@ if (Meteor.isClient) {
 		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad",color:"#dd4b39"}]) {
 			
 			
+			
+			const lastIP = interactive_plot.length;
 			  var data = [], totalPoints = 100;
 			  const getRandomData = function() {
 				
@@ -57,8 +59,6 @@ if (Meteor.isClient) {
 			
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
-			
-			const lastIP = interactive_plot.length;
 			interactive_plot.push($.plot('#interactive_'+sensorName, [getRandomData()], {
 				  grid  : {
 					borderColor: '#f3f3f3',
@@ -84,6 +84,7 @@ if (Meteor.isClient) {
 				})
 			);
 			interactive_plot[lastIP].realtime       = 'on' //If == to on then fetch data every x seconds. else stop fetching
+			interactive_plot[lastIP].getRandomData       = getRandomData 
 			
 			//INITIALIZE REALTIME DATA FETCHING
 			if (interactive_plot[lastIP].realtime === 'on') {
