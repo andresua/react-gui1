@@ -49,13 +49,13 @@ if (Meteor.isClient) {
 		
 		  var temperatura = Meteor.subscribe('temperatura', subscriptionMTR(0));
 		  var cusorTemperatura = TemperaturaMongo.find();
-		  cusorTemperatura.observeChanges(cusorTemperatura, 0);
+		  cusorTemperatura.observeChanges(generateSubscritor(cusorTemperatura, 0));
 		  var voltaje = Meteor.subscribe('voltaje', subscriptionMTR(1));
 		  var cusorVoltaje = VoltajeMongo.find();
-		  cusorVoltaje.observeChanges(cusorVoltaje, 1);
+		  cusorVoltaje.observeChanges(generateSubscritor(cusorVoltaje, 1));
 		  var humedad = Meteor.subscribe('humedad', subscriptionMTR(2));
 		  var cusorHumedad = HumedadMongo.find();
-		  cusorHumedad.observeChanges(cusorHumedad, 2);
+		  cusorHumedad.observeChanges(generateSubscritor(cusorHumedad, 2));
 		function update(mongo) {
 		  interactive_plot.forEach((ip) => {
 			  if(ip.realtime === 'on')
