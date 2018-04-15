@@ -23,7 +23,7 @@ if (Meteor.isClient) {
 		updateInterval = 500 //Fetch data ever x milliseconds
 		dataGeneral = [], totalPoints = 100;
 		
-		function subscriptionMTR(const idx) {
+		function subscriptionMTR(idx) {
 			return (error, result) => {
 				console.log(error, result);
 				interactive_plot[idx].dataMongo = result;
