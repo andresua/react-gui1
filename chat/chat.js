@@ -109,7 +109,11 @@ if (Meteor.isClient) {
 			var backColor = sensor.color;
 			var minValue = sensor.min;
 			var maxValue = sensor.max;
-			interactive_plot.push($.plot('#interactive_'+sensorName, [getFromMongo ? [] : getRandomData()], {
+			var mongoStart = [];
+			for(int i = minValue; i < maxValue; i++) {
+				mongoStart.push([i, 0]);
+			}
+			interactive_plot.push($.plot('#interactive_'+sensorName, [getFromMongo ? mongoStart : getRandomData()], {
 				  grid  : {
 					borderColor: '#f3f3f3',
 					borderWidth: 1,
