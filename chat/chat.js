@@ -157,6 +157,7 @@ if (Meteor.isServer) {
   
   Meteor.startup(function () {
 	  Meteor.publish('temperatura', function streamTemperaturaPublication() {
+	    if(console)console.log("Updated!");
 		return TemperaturaMongo.find();
 	  });
 	  Meteor.publish('voltaje', function streamVoltajePublication() {
