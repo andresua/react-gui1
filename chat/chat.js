@@ -58,7 +58,7 @@ if (Meteor.isClient) {
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
 			
-			const lastIP = interactive_plot.length();
+			const lastIP = interactive_plot.length;
 			interactive_plot.push($.plot('#interactive_'+sensorName, [getRandomData()], {
 				  grid  : {
 					borderColor: '#f3f3f3',
