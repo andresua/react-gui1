@@ -24,13 +24,25 @@ if (Meteor.isClient) {
 		dataGeneral = [], totalPoints = 100;
 		
 		function subscriptionMTR(idx) {
-			return (error, result) => {
+			return (result) => {
 				console.log(error, result);
 				if(interactive_plot[idx])interactive_plot[idx].dataMongo = result;
 				// update(mongo)
 			};
 		}
 		  var temperatura = Meteor.subscribe('temperatura', subscriptionMTR(0));
+		  var cusorTemperatura = TemperaturaMongo.find();
+		  cusorTemperatura.observeChanges({
+			  added: function () {
+				  subscriptionMTR(0)(cusorTemperatura.fetch());
+			  },
+			  changed: function () {
+				  subscriptionMTR(0)(cusorTemperatura.fetch());
+			  },
+			  removed: function () {
+				  subscriptionMTR(0)(cusorTemperatura.fetch());
+			  }
+		  });
 		  var voltaje = Meteor.subscribe('voltaje', subscriptionMTR(1));
 		  var humedad = Meteor.subscribe('humedad', subscriptionMTR(2));
 		function update(mongo) {
@@ -157,7 +169,6 @@ if (Meteor.isServer) {
   
   Meteor.startup(function () {
 	  Meteor.publish('temperatura', function streamTemperaturaPublication() {
-	    if(console)console.log("Updated!");
 		return TemperaturaMongo.find();
 	  });
 	  Meteor.publish('voltaje', function streamVoltajePublication() {
