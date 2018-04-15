@@ -1,4 +1,4 @@
-import { ReactiveDict } from 'meteor/reactive-dict';
+// import { ReactiveDict } from 'meteor/reactive-dict';
 
 // Colección de MongoDB
 Messages = new Mongo.Collection("messages");
