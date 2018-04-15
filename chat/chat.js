@@ -154,17 +154,16 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-  Meteor.publish('temperatura', function streamTemperaturaPublication() {
-    return TemperaturaMongo.find();
-  });
-  Meteor.publish('voltaje', function streamVoltajePublication() {
-    return VoltajeMongo.find();
-  });
-  Meteor.publish('humedad', function streamHumedadPublication() {
-    return HumedadMongo.find();
-  });
   
   Meteor.startup(function () {
-    // Código que se ejecuta al iniciar el servidor
+	  Meteor.publish('temperatura', function streamTemperaturaPublication() {
+		return TemperaturaMongo.find();
+	  });
+	  Meteor.publish('voltaje', function streamVoltajePublication() {
+		return VoltajeMongo.find();
+	  });
+	  Meteor.publish('humedad', function streamHumedadPublication() {
+		return HumedadMongo.find();
+	  });
   });
 }
