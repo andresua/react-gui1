@@ -30,9 +30,9 @@ if (Meteor.isClient) {
 				// update(mongo)
 			};
 		}
-		  var temperatura = Meteor.subscribe('temperatura', subscriptionMTR(0));
-		  var voltaje = Meteor.subscribe('voltaje', subscriptionMTR(1));
-		  var humedad = Meteor.subscribe('humedad', subscriptionMTR(2));
+		  var temperatura = Meteor.subscribe('temperatura', [subscriptionMTR(0)]);
+		  var voltaje = Meteor.subscribe('voltaje', [subscriptionMTR(1)]);
+		  var humedad = Meteor.subscribe('humedad', [subscriptionMTR(2)]);
 		function update(mongo) {
 		  interactive_plot.forEach((ip) => {
 			  if(ip.realtime === 'on')
