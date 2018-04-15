@@ -34,16 +34,16 @@ if (Meteor.isClient) {
 			const lastIP = interactive_plot.length;
 			  const getRandomData = function() {
 				
-			  if (data[lastIP].length > 0)
-				data[lastIP] = data[lastIP].slice(1)
+			  if (dataGeneral[lastIP].length > 0)
+				dataGeneral[lastIP] = dataGeneral[lastIP].slice(1)
 			  // Do a random walk
-			  while (data[lastIP].length < totalPoints) {
-				data[lastIP].push(Math.min(100, Math.max(0, (data[lastIP].length > 0 ? data[lastIP][data[lastIP].length - 1] : 50) + Math.random() * 10 - 5)))
+			  while (dataGeneral[lastIP].length < totalPoints) {
+				dataGeneral[lastIP].push(Math.min(100, Math.max(0, (dataGeneral[lastIP].length > 0 ? dataGeneral[lastIP][dataGeneral[lastIP].length - 1] : 50) + Math.random() * 10 - 5)))
 			  }
 			  // Zip the generated y values with the x values
 			  var res = []
-			  for (var i = 0; i < data[lastIP].length; ++i) {
-				res.push([i, data[lastIP][i]])
+			  for (var i = 0; i < dataGeneral[lastIP].length; ++i) {
+				res.push([i, dataGeneral[lastIP][i]])
 			  }
 			  return res
 			};
