@@ -27,7 +27,7 @@ if (Meteor.isClient) {
 			return (result) => {
 				console.log(result);
 				if(interactive_plot[idx] && result && result.map) {
-					interactive_plot[idx].dataMongo = result.map((collectionItem) => collectionItem.value);
+					interactive_plot[idx].dataMongo = result.map((collectionItem, index) => [index, collectionItem.value]);
 					update(getFromMongo)
 				}
 			};
