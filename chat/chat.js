@@ -65,7 +65,7 @@ if (Meteor.isClient) {
 			
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
-			interactive_plot.push($.plot('#interactive_'+sensorName, [mongo ? [] : getRandomData()], {
+			interactive_plot.push($.plot('#interactive_'+sensorName, [getFromMongo ? [] : getRandomData()], {
 				  grid  : {
 					borderColor: '#f3f3f3',
 					borderWidth: 1,
