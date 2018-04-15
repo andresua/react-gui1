@@ -18,6 +18,7 @@ if (Meteor.isClient) {
 		// be fetched from a server
 		interactive_plot = [];
 		updateInterval = 500 //Fetch data ever x milliseconds
+		dataGeneral = [], totalPoints = 100;
 		function update() {
 		  interactive_plot.forEach((ip) => {
 			  if(ip.realtime === 'on')
@@ -29,29 +30,20 @@ if (Meteor.isClient) {
 		};
 		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad",color:"#dd4b39"}]) {
 			
-			
-			
+			dataGeneral.push([]);
 			const lastIP = interactive_plot.length;
-			  var data = [], totalPoints = 100;
 			  const getRandomData = function() {
 				
-			  if (data.length > 0)
-				data = data.slice(1)
+			  if (data[lastIP].length > 0)
+				data[lastIP] = data[lastIP].slice(1)
 			  // Do a random walk
-			  while (data.length < totalPoints) {
-				var prev = data.length > 0 ? data[data.length - 1] : 50,
-					y    = prev + Math.random() * 10 - 5
-				if (y < 0) {
-				  y = 0
-				} else if (y > 100) {
-				  y = 100
-				}
-				data.push(y)
+			  while (data[lastIP].length < totalPoints) {
+				data[lastIP].push(Math.min(100, Math.max(0, (data[lastIP].length > 0 ? data[lastIP][data[lastIP].length - 1] : 50) + Math.random() * 10 - 5)))
 			  }
 			  // Zip the generated y values with the x values
 			  var res = []
-			  for (var i = 0; i < data.length; ++i) {
-				res.push([i, data[i]])
+			  for (var i = 0; i < data[lastIP].length; ++i) {
+				res.push([i, data[lastIP][i]])
 			  }
 			  return res
 			};
