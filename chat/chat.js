@@ -1,13 +1,16 @@
+import { ReactiveDict } from 'meteor/reactive-dict';
+
 // Colección de MongoDB
 Messages = new Mongo.Collection("messages");
+TemperaturaMongo = new Mongo.Collection("temperatura");
+VoltajeMongo = new Mongo.Collection("voltaje");
+HumedadMongo = new Mongo.Collection("humedad");
+const getFromMongo = false;
 
 if (Meteor.isClient) {
+	this.state = new ReactiveDict();
 	Meteor.absoluteUrl.defaultOptions.rootUrl = location.protocol + "//" + location.host;
 	setTimeout(()=>{
-	  //this.state = new ReactiveDict();
-	  var temperatura = Meteor.subscribe('temperatura');
-	  var voltaje = Meteor.subscribe('voltaje');
-	  var humedad = Meteor.subscribe('humedad');
 
 		try {
 		/*
@@ -19,14 +22,25 @@ if (Meteor.isClient) {
 		interactive_plot = [];
 		updateInterval = 500 //Fetch data ever x milliseconds
 		dataGeneral = [], totalPoints = 100;
-		function update() {
+		
+		function subscriptionMTR(const idx) {
+			return (error, result) => {
+				console.log(error, result);
+				interactive_plot[idx].dataMongo = result;
+				// update(mongo)
+			};
+		}
+		  var temperatura = Meteor.subscribe('temperatura', subscriptionMTR(0));
+		  var voltaje = Meteor.subscribe('voltaje', subscriptionMTR(1));
+		  var humedad = Meteor.subscribe('humedad', subscriptionMTR(2));
+		function update(mongo) {
 		  interactive_plot.forEach((ip) => {
 			  if(ip.realtime === 'on')
-				ip.setData([ip.getRandomData()])
+				ip.setData([mongo ? ip.dataMongo : ip.getRandomData()])
 			    ip.draw()
 		  })
 		  // Since the axes don't change, we don't need to call plot.setupGrid()
-		  setTimeout(update, updateInterval)
+		  mongo ? return true:setTimeout(update, updateInterval);
 		};
 		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad",color:"#dd4b39"}]) {
 			
@@ -51,7 +65,7 @@ if (Meteor.isClient) {
 			
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
-			interactive_plot.push($.plot('#interactive_'+sensorName, [getRandomData()], {
+			interactive_plot.push($.plot('#interactive_'+sensorName, [mongo ? [] : getRandomData()], {
 				  grid  : {
 					borderColor: '#f3f3f3',
 					borderWidth: 1,
@@ -80,7 +94,7 @@ if (Meteor.isClient) {
 			
 			//INITIALIZE REALTIME DATA FETCHING
 			if (interactive_plot[lastIP].realtime === 'on') {
-			  update()
+			  update(getFromMongo)
 			}
 			//REALTIME TOGGLE
 			$('#realtime_' + sensorName + ' .btn').click(() => {
@@ -90,7 +104,7 @@ if (Meteor.isClient) {
 			  else {
 				interactive_plot[lastIP].realtime = 'off'
 			  }
-			  update()
+			  update(getFromMongo)
 			})
 		}
 		/*
@@ -141,13 +155,13 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.publish('temperatura', function streamTemperaturaPublication() {
-    return Messages.find();
+    return TemperaturaMongo.find();
   });
   Meteor.publish('voltaje', function streamVoltajePublication() {
-    return Messages.find();
+    return VoltajeMongo.find();
   });
   Meteor.publish('humedad', function streamHumedadPublication() {
-    return Messages.find();
+    return HumedadMongo.find();
   });
   
   Meteor.startup(function () {
