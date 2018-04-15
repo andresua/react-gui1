@@ -5,7 +5,7 @@ Messages = new Mongo.Collection("messages");
 TemperaturaMongo = new Mongo.Collection("temperatura");
 VoltajeMongo = new Mongo.Collection("voltaje");
 HumedadMongo = new Mongo.Collection("humedad");
-const getFromMongo = false;
+const getFromMongo = true;
 
 if (Meteor.isClient) {
 	this.state = new ReactiveDict();
@@ -28,7 +28,7 @@ if (Meteor.isClient) {
 				console.log(result);
 				if(interactive_plot[idx] && result && result.map) {
 					interactive_plot[idx].dataMongo = result.map((collectionItem) => collectionItem.value);
-					// update(mongo)
+					update(getFromMongo)
 				}
 			};
 		}
@@ -65,7 +65,26 @@ if (Meteor.isClient) {
 		  // Since the axes don't change, we don't need to call plot.setupGrid()
 		  return mongo ? false:setTimeout(update, updateInterval);
 		};
-		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad",color:"#dd4b39"}]) {
+		for (const sensor of [
+			{
+				name:"temperatura",
+				color:"#f39c12",
+				min:0,
+				max:100
+			}, 
+			{
+				name:"voltaje",
+				color:"#3c8dbc",
+				min:0,
+				max:100
+			}, 
+			{
+				name:"humedad",
+				color:"#dd4b39",
+				min:0,
+				max:100
+			}
+		]) {
 			
 			dataGeneral.push([]);
 			const lastIP = interactive_plot.length;
@@ -75,7 +94,7 @@ if (Meteor.isClient) {
 				dataGeneral[lastIP] = dataGeneral[lastIP].slice(1)
 			  // Do a random walk
 			  while (dataGeneral[lastIP].length < totalPoints) {
-				dataGeneral[lastIP].push(Math.min(100, Math.max(0, (dataGeneral[lastIP].length > 0 ? dataGeneral[lastIP][dataGeneral[lastIP].length - 1] : 50) + Math.random() * 10 - 5)))
+				dataGeneral[lastIP].push(Math.min(sensor.max, Math.max(sensor.min, (dataGeneral[lastIP].length > 0 ? dataGeneral[lastIP][dataGeneral[lastIP].length - 1] : sensor.max/2) + Math.random() * (sensor.max - sensor.min) - (sensor.max - sensor.min)/2)))
 			  }
 			  // Zip the generated y values with the x values
 			  var res = []
@@ -88,6 +107,8 @@ if (Meteor.isClient) {
 			
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
+			var minValue = sensor.min;
+			var maxValue = sensor.max;
 			interactive_plot.push($.plot('#interactive_'+sensorName, [getFromMongo ? [] : getRandomData()], {
 				  grid  : {
 					borderColor: '#f3f3f3',
@@ -103,8 +124,8 @@ if (Meteor.isClient) {
 					color: backColor
 				  },
 				  yaxis : {
-					min : 0,
-					max : 100,
+					min : minValue,
+					max : maxValue,
 					show: true
 				  },
 				  xaxis : {
