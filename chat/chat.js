@@ -25,7 +25,7 @@ if (Meteor.isClient) {
 		
 		function subscriptionMTR(idx) {
 			return (result) => {
-				console.log(error, result);
+				console.log(result);
 				if(interactive_plot[idx])interactive_plot[idx].dataMongo = result;
 				// update(mongo)
 			};
