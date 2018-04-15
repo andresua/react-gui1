@@ -16,8 +16,17 @@ if (Meteor.isClient) {
 		 */
 		// We use an inline data source in the example, usually data would
 		// be fetched from a server
-		var interactive_plot = {};
-		var update = {};
+		interactive_plot = [];
+		updateInterval = 500 //Fetch data ever x milliseconds
+		function update() {
+		  interactive_plot.forEach((ip) => {
+			  if(ip.realtime === 'on')
+				ip.setData([getRandomData()])
+			    ip.draw()
+		  })
+		  // Since the axes don't change, we don't need to call plot.setupGrid()
+		  setTimeout(update, updateInterval)
+		};
 		for (const sensor of [{name:"temperatura",color:"#f39c12"}, {name:"voltaje",color:"#3c8dbc"}, {name:"humedad",color:"#dd4b39"}]) {
 			
 			
@@ -49,53 +58,46 @@ if (Meteor.isClient) {
 			var sensorName = sensor.name;
 			var backColor = sensor.color;
 			
-			interactive_plot[sensorName] = $.plot('#interactive_'+sensorName, [getRandomData()], {
-			  grid  : {
-				borderColor: '#f3f3f3',
-				borderWidth: 1,
-				tickColor  : '#f3f3f3'
-			  },
-			  series: {
-				shadowSize: 0, // Drawing is faster without shadows
-				color     : backColor
-			  },
-			  lines : {
-				fill : true, //Converts the line chart to area chart
-				color: backColor
-			  },
-			  yaxis : {
-				min : 0,
-				max : 100,
-				show: true
-			  },
-			  xaxis : {
-				show: true
-			  }
-			})
-			var updateInterval = 500 //Fetch data ever x milliseconds
-			var realtime       = 'on' //If == to on then fetch data every x seconds. else stop fetching
+			const lastIP = interactive_plot.length();
+			interactive_plot.push($.plot('#interactive_'+sensorName, [getRandomData()], {
+				  grid  : {
+					borderColor: '#f3f3f3',
+					borderWidth: 1,
+					tickColor  : '#f3f3f3'
+				  },
+				  series: {
+					shadowSize: 0, // Drawing is faster without shadows
+					color     : backColor
+				  },
+				  lines : {
+					fill : true, //Converts the line chart to area chart
+					color: backColor
+				  },
+				  yaxis : {
+					min : 0,
+					max : 100,
+					show: true
+				  },
+				  xaxis : {
+					show: true
+				  }
+				})
+			);
+			interactive_plot[lastIP].realtime       = 'on' //If == to on then fetch data every x seconds. else stop fetching
 			
-			update[sensorName] = function() {
-			  console.log(sensorName, interactive_plot[sensorName].getPlaceholder());
-			  interactive_plot[sensorName].setData([getRandomData()])
-			  // Since the axes don't change, we don't need to call plot.setupGrid()
-			  interactive_plot[sensorName].draw()
-			  if (realtime === 'on')
-				setTimeout(update[sensorName], updateInterval)
-			}
 			//INITIALIZE REALTIME DATA FETCHING
-			if (realtime === 'on') {
-			  update[sensorName]()
+			if (interactive_plot[lastIP].realtime === 'on') {
+			  update()
 			}
 			//REALTIME TOGGLE
 			$('#realtime_' + sensorName + ' .btn').click(() => {
 			  if ($(this).data('toggle') === 'on') {
-				realtime = 'on'
+				interactive_plot[lastIP].realtime = 'on'
 			  }
 			  else {
-				realtime = 'off'
+				interactive_plot[lastIP].realtime = 'off'
 			  }
-			  update[sensorName]()
+			  update()
 			})
 		}
 		/*
