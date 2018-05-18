@@ -29,6 +29,21 @@ if (Meteor.isClient) {
 				if(interactive_plot[idx] && result && result.map) {
 					interactive_plot[idx].dataMongo = result.map((collectionItem, index) => [index, collectionItem.value]);
 					update(getFromMongo)
+					var idAvg;
+					if(idx==0) idAvg = "avg_temperatura";
+					if(idx==1) idAvg = "avg_voltaje";
+					if(idx==2) idAvg = "avg_humedad";
+					
+					if(idAvg) {
+						var eleAvg = document.getElementById(idAvg);
+						
+						if(eleAvg) {
+							if(result.length > 0)
+								eleAvg.innerText = result.map(collectionItem => collectionItem.value).reduce((value1, value2) => value1 + value2) / result.length + "%";
+							else
+								eleAvg.innerText = "0%";
+						}
+					}
 				}
 			};
 		}
@@ -61,6 +76,7 @@ if (Meteor.isClient) {
 			  if(ip.realtime === 'on')
 				ip.setData([mongo ? ip.dataMongo : ip.getRandomData()])
 			    ip.draw()
+				
 		  })
 		  // Since the axes don't change, we don't need to call plot.setupGrid()
 		  return mongo ? false:setTimeout(update, updateInterval);
