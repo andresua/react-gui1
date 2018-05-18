@@ -39,7 +39,7 @@ if (Meteor.isClient) {
 						
 						if(eleAvg) {
 							if(result.length > 0)
-								eleAvg.innerText = result.map(collectionItem => collectionItem.value).reduce((value1, value2) => value1 + value2) / result.length + "%";
+								eleAvg.innerText = result.map(collectionItem => collectionItem.value).reduce((value1, value2) => (typeof value1 === 'string' ? parseInt(value1) : value1) + (typeof value2 === 'string' ? parseInt(value2) : value2)) / result.length + "%";
 							else
 								eleAvg.innerText = "0%";
 						}
