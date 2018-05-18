@@ -38,11 +38,11 @@ if (Meteor.isClient) {
 						var eleAvg = document.getElementById(idAvg);
 						
 						if(eleAvg) {
-							if(result.length > 0)
-								eleAvg.innerText = (Math.floor(result.map(collectionItem => collectionItem.value).reduce((value1, value2) => 
-									(typeof value1 === 'string' ? parseInt(value1) : value1) + (typeof value2 === 'string' ? parseInt(value2) : value2))) / result.length * 100) / 100.0
-										+ "%";
-							else
+							if(result.length > 0) {
+								var med = Math.floor(result.map(collectionItem => collectionItem.value).reduce((value1, value2) => 
+									(typeof value1 === 'string' ? parseInt(value1) : value1) + (typeof value2 === 'string' ? parseInt(value2) : value2)) / result.length * 100);
+								eleAvg.innerText = med / 100.0 + "%";
+							} else
 								eleAvg.innerText = "0%";
 						}
 					}
