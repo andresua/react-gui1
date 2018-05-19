@@ -38,7 +38,7 @@ if (Meteor.isClient) {
 			};
 	};
     var costo = Meteor.subscribe('costo', tmpSubscriptionCosto());
-    var cusorCosto = CostoMongo.find();
+    var cursorCosto = CostoMongo.find();
     cursorCosto.observeChanges(() => {
 		return {
 				  added: function () {
