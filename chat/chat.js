@@ -42,13 +42,13 @@ if (Meteor.isClient) {
     cursorCosto.observeChanges(() => {
 		return {
 				  added: function () {
-					  tmpSubscriptionCosto()(cursor.fetch());
+					  tmpSubscriptionCosto()(cursorCosto.fetch());
 				  },
 				  changed: function () {
-					  tmpSubscriptionCosto()(cursor.fetch());
+					  tmpSubscriptionCosto()(cursorCosto.fetch());
 				  },
 				  removed: function () {
-					  tmpSubscriptionCosto()(cursor.fetch());
+					  tmpSubscriptionCosto()(cursorCosto.fetch());
 				  }
 			  };
 	});
