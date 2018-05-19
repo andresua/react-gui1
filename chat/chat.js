@@ -27,38 +27,40 @@ if (Meteor.isClient) {
 		document.getElementById('main_menu_IOT').setAttribute("class", "main_menu active");
 	};
 	
-	var tmpSubscriptionCosto = function() {
-			return (result) => {
-				console.log(result);
-				if(result && result.length > 0) {
-					
-					console.log(document.getElementById('costo_facturacion'));
-					document.getElementById('costo_facturacion').innerText = result[0].value;
-				}
-			};
-	};
-    var costo = Meteor.subscribe('costo', tmpSubscriptionCosto());
-    var cursorCosto = CostoMongo.find();
-    cursorCosto.observeChanges(() => {
-		return {
-				  added: function () {
-					  tmpSubscriptionCosto()(cursorCosto.fetch());
-				  },
-				  changed: function () {
-					  tmpSubscriptionCosto()(cursorCosto.fetch());
-				  },
-				  removed: function () {
-					  tmpSubscriptionCosto()(cursorCosto.fetch());
-				  }
-			  };
-	});
-	
 	
 	this.state = new ReactiveDict();
 	Meteor.absoluteUrl.defaultOptions.rootUrl = location.protocol + "//" + location.host;
 	setTimeout(()=>{
+	
 
-		try {
+		try {		
+		
+		var tmpSubscriptionCosto = function() {
+				return (result) => {
+					console.log(result);
+					if(result && result.length > 0) {
+						
+						console.log(document.getElementById('costo_facturacion'));
+						document.getElementById('costo_facturacion').innerText = result[0].value;
+					}
+				};
+		};
+		var costo = Meteor.subscribe('costo', tmpSubscriptionCosto());
+		var cursorCosto = CostoMongo.find();
+		cursorCosto.observeChanges(() => {
+			return {
+					  added: function () {
+						  tmpSubscriptionCosto()(cursorCosto.fetch());
+					  },
+					  changed: function () {
+						  tmpSubscriptionCosto()(cursorCosto.fetch());
+					  },
+					  removed: function () {
+						  tmpSubscriptionCosto()(cursorCosto.fetch());
+					  }
+				  };
+		});
+
 		/*
 		 * Flot Interactive Chart
 		 * -----------------------
