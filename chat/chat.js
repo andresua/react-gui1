@@ -35,7 +35,7 @@ if (Meteor.isClient) {
 
 		try {		
 		
-		var tmpSubscriptionCosto = function() {
+		function tmpSubscriptionCosto() {
 				return (result) => {
 					console.log(result);
 					if(result && result.length > 0) {
