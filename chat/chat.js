@@ -9,7 +9,7 @@ CostoMongo = new Mongo.Collection("costo");
 const getFromMongo = true;
 
 if (Meteor.isClient) {
-	function toggleDashboardCostos() {
+	window.toggleDashboardCostos = function() {
 		console.log(document.getElementById('dashboard_Costos'));
 		console.log(document.getElementById('main_menu_costos'));
 		document.getElementById('dashboard_IOT').setAttribute("class", "content not-visible");
@@ -18,7 +18,7 @@ if (Meteor.isClient) {
 		document.getElementById('main_menu_IOT').setAttribute("class", "main_menu");
 	};
 	
-	function toggleDashboardIOT() {
+	window.toggleDashboardIOT = function() {
 		console.log(document.getElementById('dashboard_IOT'));
 		console.log(document.getElementById('main_menu_IOT'));
 		document.getElementById('dashboard_IOT').setAttribute("class", "content");
