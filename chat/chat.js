@@ -12,8 +12,8 @@ if (Meteor.isClient) {
 	function toggleDashboardCostos() {
 		console.log(document.getElementById('dashboard_Costos'));
 		console.log(document.getElementById('main_menu_costos'));
-		document.getElementById('dashboard_IOT').setAttribute("class", "content");
-		document.getElementById('dashboard_Costos').setAttribute("class", "content not-visible");
+		document.getElementById('dashboard_IOT').setAttribute("class", "content not-visible");
+		document.getElementById('dashboard_Costos').setAttribute("class", "content");
 		document.getElementById('main_menu_costos').setAttribute("class", "main_menu active");
 		document.getElementById('main_menu_IOT').setAttribute("class", "main_menu");
 	};
