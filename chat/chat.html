@@ -26,6 +26,26 @@
       </a>
 	</nav>
 </header>
+
+<aside class="main-sidebar">
+	<section class="sidebar" style="height: auto;">
+		<ul class="sidebar-menu tree" data-widget="tree">
+			<li class="header">MAIN NAVIGATION</li>
+			<li class="active treeview menu-open">
+			  <a href="#">
+				<i class="fa fa-dashboard"></i> <span>Dashboard</span>
+				<span class="pull-right-container">
+				  <i class="fa fa-angle-left pull-right"></i>
+				</span>
+			  </a>
+			  <ul class="treeview-menu" id="main_menu">
+				<li class="main_menu active" id="main_menu_IOT" onclick="toggleDashboardIOT()"><a><i class="fa fa-circle-o"></i> Dashboard IoT</a></li>
+				<li class="main_menu" id="main_menu_costos" onclick="toggleDashboardCostos()"><a><i class="fa fa-circle-o"></i> Dashboard Costos</a></li>
+			  </ul>
+			</li>
+		</ul>
+	</section>
+</aside>
 	  
 <div class="content-wrapper" style="min-height: 960px;">	
 	<section class="content-header">
@@ -41,8 +61,14 @@
 
               {{#AdminLTE skin="green-light"}}
 				  <!-- Main content -->
-					<section class="content">
-					<div class="row">
+				    <style>
+						.not-visible {
+							height: 0;
+						}
+					</style>
+					
+					<section class="content" id="dashboard_IOT">
+					<div class="row" >
 						<div class="col-md-3 col-sm-6 col-xs-12">
 						  <div class="info-box">
 							<span class="info-box-icon bg-aqua"><i class="fa fa-tint"></i></span>
@@ -58,10 +84,10 @@
 						<!-- /.col -->
 						<div class="col-md-3 col-sm-6 col-xs-12">
 						  <div class="info-box">
-							<span class="info-box-icon bg-yellow"><i class="fa fa-bolt"></i></span>
+							<span class="info-box-icon bg-yellow"><i class="fa fa-lightbulb"></i></span>
 
 							<div class="info-box-content">
-							  <span class="info-box-text">Voltaje promedio</span>
+							  <span class="info-box-text">Iluminación promedio</span>
 							  <span class="info-box-number" id="avg_voltaje">-%</span>
 							</div>
 							<!-- /.info-box-content -->
@@ -120,9 +146,9 @@
 						  <!-- small box -->
 						  <div class="small-box bg-yellow">
 							<div class="inner">
-							  <h3>15</h3>
+							  <h3 id="costo_facturacion">15</h3>
 
-							  <p>Fallas de desconcexión en la última hora con los sensores</p>
+							  <p>Fallas en la última hora</p>
 							</div>
 							<div class="icon">
 							  <i class="ion ion-person-add"></i>
@@ -176,7 +202,7 @@
 							<div class="nav nav-tabs pull-right">
 							  <i class="fa fa-bar-chart-o"></i>
 
-							  <h3 class="box-title">Voltaje</h3>
+							  <h3 class="box-title">Iluminación</h3>
 
 							  <div class="box-tools pull-right">
 								Real time
@@ -220,6 +246,27 @@
 						</section>
 						<!-- /.col -->
 					  </div>
+					  <!-- /.row -->
+					</section>
+					<!-- /.content -->
+					
+					<section class="content not-visible" id="dashboard_Costos">
+						<div class="row" >
+							<div class="col-md-3 col-sm-6 col-xs-12">
+							  <div class="info-box">
+								<span class="info-box-icon bg-aqua"><i class="fa fa-tint"></i></span>
+
+								<div class="info-box-content">
+								  <span class="info-box-text">Costo fscturación</span>
+								  <span class="info-box-number" id="costo_facturacion">-</span>
+								</div>
+								<!-- /.info-box-content -->
+							  </div>
+							  <!-- /.info-box -->
+							</div>
+							<!-- /.col -->
+							<!-- /.col -->
+						</div>
 					  <!-- /.row -->
 					</section>
 					<!-- /.content -->

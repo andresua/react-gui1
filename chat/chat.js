@@ -5,9 +5,55 @@ Messages = new Mongo.Collection("messages");
 TemperaturaMongo = new Mongo.Collection("temperatura");
 VoltajeMongo = new Mongo.Collection("voltaje");
 HumedadMongo = new Mongo.Collection("humedad");
+CostoMongo = new Mongo.Collection("costo");
 const getFromMongo = true;
 
 if (Meteor.isClient) {
+	function toggleDashboardCostos() {
+		console.log(document.getElementById('dashboard_Costos'));
+		console.log(document.getElementById('main_menu_costos'));
+		document.getElementById('dashboard_IOT').setAttribute("class", "content");
+		document.getElementById('dashboard_Costos').setAttribute("class", "content not-visible");
+		document.getElementById('main_menu_costos').setAttribute("class", "main_menu active");
+		document.getElementById('main_menu_IOT').setAttribute("class", "main_menu");
+	};
+	
+	function toggleDashboardIOT() {
+		console.log(document.getElementById('dashboard_IOT'));
+		console.log(document.getElementById('main_menu_IOT'));
+		document.getElementById('dashboard_IOT').setAttribute("class", "content");
+		document.getElementById('dashboard_Costos').setAttribute("class", "content not-visible");
+		document.getElementById('main_menu_costos').setAttribute("class", "main_menu");
+		document.getElementById('main_menu_IOT').setAttribute("class", "main_menu active");
+	};
+	
+	var tmpSubscriptionCosto = function() {
+			return (result) => {
+				console.log(result);
+				if(result && result.length > 0) {
+					
+					console.log(document.getElementById('costo_facturacion'));
+					document.getElementById('costo_facturacion').innerText = result[0].value;
+				}
+			};
+	};
+    var costo = Meteor.subscribe('costo', tmpSubscriptionCosto());
+    var cusorCosto = CostoMongo.find();
+    cursorCosto.observeChanges(() => {
+		return {
+				  added: function () {
+					  tmpSubscriptionCosto()(cursor.fetch());
+				  },
+				  changed: function () {
+					  tmpSubscriptionCosto()(cursor.fetch());
+				  },
+				  removed: function () {
+					  tmpSubscriptionCosto()(cursor.fetch());
+				  }
+			  };
+	});
+	
+	
 	this.state = new ReactiveDict();
 	Meteor.absoluteUrl.defaultOptions.rootUrl = location.protocol + "//" + location.host;
 	setTimeout(()=>{
@@ -231,6 +277,9 @@ if (Meteor.isServer) {
 	  });
 	  Meteor.publish('humedad', function streamHumedadPublication() {
 		return HumedadMongo.find();
+	  });
+	  Meteor.publish('costo', function streamCostoPublication() {
+		return CostoMongo.find();
 	  });
   });
 }
